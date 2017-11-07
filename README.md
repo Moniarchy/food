@@ -1,4 +1,4 @@
-#Low Hanging Fruit
+# Low Hanging Fruit
 
 This application will enable food sharing between neighbors, who can contact each other to trade food or leave a notice saying that they've got food to give away. Later on, this app will show events in the area where food is being given for free or low cost.
 
