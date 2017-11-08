@@ -11,12 +11,13 @@ const comparePassword = plainTextPassword => user => {
       if( valid ) {
         return { id, email, username, lat, long }
       } else {
-        throw new Error('User not found')
+        //TODO: add handling for wrong email/password
+        throw new Error('Email or password did not match.')
       }
     })
 }
 
-const login = ({ email, password }) => 
+const login = ({ email, password }) =>
   db.one( LOGIN, { email })
     .then( comparePassword( password ))
 
