@@ -1,13 +1,7 @@
 const db = require( '../../connection' )
 const bcrypt = require( 'bcrypt' )
 
-const CHECK_FOR_USER = 'SELECT username, email FROM users WHERE username=$1 OR email=$2'
 const SIGN_UP = 'INSERT INTO users ( password, salt, username, email, lat, long ) VALUES ( ${password}, ${salt}, ${username}, ${email}, ${lat}, ${long} ) RETURNING id, username, email'
-
-
-const checkIfUserExists = ({username, email}) => {
-  return db.any( CHECK_FOR_USER, [username, email])
-}
 
 const generateSaltedUser = user => () =>
   bcrypt.genSalt()
@@ -23,4 +17,4 @@ const signUp = user =>
     .then( generateEncryptedPasswordUser )
     .then( data => db.one( SIGN_UP, data ))
 
-module.exports = {signUp, checkIfUserExists}
+module.exports = {signUp}

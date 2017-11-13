@@ -1,4 +1,4 @@
-const { signUp, checkIfUserExists } = require( './signUp' )
+const { signUp } = require( './signUp' )
 const login = require( './login' )
 
-module.exports = { signUp, checkIfUserExists, login }
+module.exports = { signUp, login }
