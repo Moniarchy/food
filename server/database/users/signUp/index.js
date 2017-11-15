@@ -11,10 +11,10 @@ const generateEncryptedPasswordUser = user =>
   bcrypt.hash( user.password, user.salt )
     .then( encryptedPassword => Object.assign( {}, user, { password: encryptedPassword }))
 
-const signUp = user => 
+const signUp = user =>
   bcrypt.genSalt()
     .then( generateSaltedUser(user) )
     .then( generateEncryptedPasswordUser )
     .then( data => db.one( SIGN_UP, data ))
 
-module.exports = signUp
+module.exports = {signUp}
