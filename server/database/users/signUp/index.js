@@ -17,4 +17,4 @@ const signUp = user =>
     .then( generateEncryptedPasswordUser )
     .then( data => db.one( SIGN_UP, data ))
 
-module.exports = {signUp}
+module.exports = signUp
