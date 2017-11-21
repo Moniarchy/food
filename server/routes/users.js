@@ -16,7 +16,7 @@ router.post( '/sign-up', ( request, response ) => {
 router.post( '/login', ( request, response ) => {
   //if request.session.user, don't even let someone see this page
   User.login( request.body )
-    .then( user => response.status( 200 ).json( user ))
+    .then( user => response.cookie( 'user_id', user.id ).status( 200 ).json( user ))
     .catch( error => response.status( 500 ).json({ error: error.message }))
     //TODO: add handling if the usernae or email does not exist
     //TODO: add handling if the passwords do not match

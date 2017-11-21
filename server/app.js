@@ -17,14 +17,14 @@ app.use( logger( 'dev' ))
 app.use( bodyParser.json())
 app.use( bodyParser.urlencoded({ extended: false }))
 app.use( cookieParser())
-// app.use( session({
-//   cookie: {
-//     maxAge: 1 * 24 * 60 * 60 * 1000
-//   },
-//     secret: process.env.SECRET,
-//     saveUninitialized: true,
-//     resave: false
-//   }))
+app.use( session({
+  cookie: {
+    maxAge: 1 * 24 * 60 * 60 * 1000
+  },
+    secret: process.env.SECRET,
+    saveUninitialized: true,
+    resave: false
+  }))
 
 app.use( '/users', users )
 app.get( '/protected-test', protect, ( request, response ) => {
