@@ -8,7 +8,7 @@ router.post( '/sign-up', ( request, response ) => {
   const { username, email, password, lat, long } = request.body
 
   User.signUp({ username, email, password, lat, long })
-    .then( user => response.cookie( 'user_id', user.id ).status( 201 ).json( user ))
+    .then( user => response.status( 201 ).json( user ))
     .catch( error => response.status( 500 ).json({ error: "The email or username you entered were already taken." }))
     //TODO: add handling (maybe on front end?) if there is missing info. that creates an error
 })
@@ -22,9 +22,12 @@ router.post( '/login', ( request, response ) => {
     //TODO: add handling if the passwords do not match
 })
 
-router.post( '/logout', ( request, response) => {
+router.get( '/logout', ( request, response ) => {
   response.clearCookie( "user_id" ).status( 200 ).json( "You have successfully logged out." )
 })
-
+router.get( '/fake', ( request, response ) => {
+  console.log(request.session)
+  response.send('hi')
+})
 
 module.exports = router
