@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./server/bin/www",
-    "start:dev": "nf start --procfile Procfile_dev",
+    "start:dev": "nf start --procfile server/Procfile_dev",
     "db:reset": "npm run db:drop; npm run db:create",
     "db:drop": "dropdb food_development",
     "db:create": "createdb food_development; psql food_development < ./sql/schema.sql"
