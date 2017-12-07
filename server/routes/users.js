@@ -25,9 +25,5 @@ router.post( '/login', ( request, response ) => {
 router.get( '/logout', ( request, response ) => {
   response.clearCookie( "user_id" ).status( 200 ).json( "You have successfully logged out." )
 })
-router.get( '/fake', ( request, response ) => {
-  console.log(request.session)
-  response.send('hi')
-})
 
 module.exports = router
