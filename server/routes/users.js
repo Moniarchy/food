@@ -1,29 +1,45 @@
 const express = require('express')
 const router = express.Router()
 
-const { User } = require( '../database' )
+const { User } = require('../database')
 
-router.post( '/sign-up', ( request, response ) => {
-  //if request.session.user, don't even let someone see this page
+router.post('/sign-up', (request, response) => {
   const { username, email, password, lat, long } = request.body
 
-  User.signUp({ username, email, password, lat, long })
-    .then( user => response.status( 201 ).json( user ))
-    .catch( error => response.status( 500 ).json({ error: "The email or username you entered were already taken." }))
-    //TODO: add handling (maybe on front end?) if there is missing info. that creates an error
+  if ( !username.length || !email.length || !password.length) {
+    response.status( 400 ).json({ error: "Please enter all required information."})
+  } else {
+    User.signUp({ username, email, password, lat, long })
+      .then( user => {
+        request.session.user = user
+        response.status( 201 ).json( user )
+      })
+      .catch( error => response.status( 500 ).json({ error: "The email or username you entered was already taken." }))
+      //TODO: add handling (maybe on front end?) if there is missing info. that creates an error
+  }
 })
 
 router.post( '/login', ( request, response ) => {
-  //if request.session.user, don't even let someone see this page
-  User.login( request.body )
-    .then( user => response.cookie( 'user_id', user.id ).status( 200 ).json( user ))
+  const { email, password } = request.body
+  User.login({ email, password })
+    .then( user => {
+      request.session.user = user
+      response.status( 200 ).json( user )
+    })
     .catch( error => response.status( 500 ).json({ error: error.message }))
     //TODO: add handling if the usernae or email does not exist
     //TODO: add handling if the passwords do not match
 })
 
+//TODO: Get this working
 router.get( '/logout', ( request, response ) => {
-  response.clearCookie( "user_id" ).status( 200 ).json( "You have successfully logged out." )
+  request.session.destroy( error => {
+    if(error) {
+      response.status(500).json({ error: error.message })
+    } else {
+      response.status(200).json("You have successfully logged out.")
+    }
+  })
 })
 
 module.exports = router

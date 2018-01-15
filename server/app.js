@@ -33,12 +33,10 @@ app.use( session({
     secret: process.env.SECRET,
     saveUninitialized: true,
     resave: false,
-    name: "user_id"
   }))
 
 app.use( '/users', users )
 app.get( '/protected-test', protect, ( request, response ) => {
-  console.log(request.session)
   response.json({ message: 'you made it' })
 })
 
